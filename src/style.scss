@@ -5,6 +5,15 @@ $dark: #373e44;
 $orange: #e7a800;
 $light-grey: #e5e5e5;
 
+/* Inline SVG icons (Font Awesome artwork, no JS library needed) */
+.svg-inline--fa {
+  display: inline-block;
+  height: 1em;
+  width: auto;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
 html {
   font-size:14px;
 }

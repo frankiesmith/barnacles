@@ -44,22 +44,10 @@ function copyToDist() {
 }
 
 /*
- * Copy the Font Awesome scripts used by the page into dist/assets/.
- * They come from the @fortawesome/fontawesome-free package, so the
- * files don't need to be committed to the repo.
- */
-function copyAssets() {
-  const faDir = 'node_modules/@fortawesome/fontawesome-free/js/';
-  return src(['brands.js', 'solid.js', 'fontawesome.js'].map((f) => faDir + f)).pipe(
-    dest(config.distDir + 'assets/')
-  );
-}
-
-/*
  * $ npm run build
  * The default build task, running these tasks in series.
  */
-const build = series(clean, copyToDist, copyAssets, ...orderedTasks);
+const build = series(clean, copyToDist, ...orderedTasks);
 
 module.exports = {
   default: build,

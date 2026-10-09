@@ -271,6 +271,58 @@ $(window).scroll(function() {
     return h + (min === '00' ? '' : ':' + min) + ampm;
   }
 
+  // "6:00:00 PM" -> "18:00" (for Google's event listings)
+  function to24h(value) {
+    var m = String(value).trim().match(/^(\d{1,2}):(\d{2})(?::\d{2})?\s*([AaPp][Mm])?$/);
+    if (!m) return null;
+    var h = +m[1], ampm = m[3] ? m[3].toLowerCase() : null;
+    if (ampm === 'pm' && h < 12) h += 12;
+    if (ampm === 'am' && h === 12) h = 0;
+    return (h < 10 ? '0' : '') + h + ':' + m[2];
+  }
+
+  function isoDate(d, time) {
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    var day = d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+    return time ? day + 'T' + time : day;
+  }
+
+  // Describe upcoming shows to search engines (schema.org MusicEvent).
+  function addEventSchema(shows) {
+    var events = shows.map(function (show) {
+      var town = (show.town || '').split(',');
+      var event = {
+        '@context': 'https://schema.org',
+        '@type': 'MusicEvent',
+        name: 'The Barnacles at ' + show.venue,
+        startDate: isoDate(show.date, show.start24),
+        eventStatus: 'https://schema.org/EventScheduled',
+        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        location: {
+          '@type': 'Place',
+          name: show.venue,
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: (town[0] || '').trim(),
+            addressRegion: (town[1] || 'MA').trim(),
+            addressCountry: 'US'
+          }
+        },
+        performer: { '@type': 'MusicGroup', name: 'The Barnacles', url: 'https://capecodbarnacles.com/' },
+        organizer: { '@type': 'Organization', name: show.venue, url: show.link || 'https://capecodbarnacles.com/' },
+        image: 'https://assets.codepen.io/1270439/barnacles-group.jpg',
+        description: 'Live classic rock from The Barnacles at ' + show.venue + (show.town ? ' in ' + show.town : '') + '.',
+        url: show.link || 'https://capecodbarnacles.com/#calendar'
+      };
+      if (show.end24) event.endDate = isoDate(show.date, show.end24);
+      return event;
+    });
+    var tag = document.createElement('script');
+    tag.type = 'application/ld+json';
+    tag.textContent = JSON.stringify(events);
+    document.head.appendChild(tag);
+  }
+
   function safeLink(value) {
     var url = String(value || '').trim();
     if (!url) return null;
@@ -344,6 +396,8 @@ $(window).scroll(function() {
           town: get(c.town),
           start: get(c.start) ? formatTime(get(c.start)) : '',
           end: get(c.end) ? formatTime(get(c.end)) : '',
+          start24: get(c.start) ? to24h(get(c.start)) : null,
+          end24: get(c.end) ? to24h(get(c.end)) : null,
           link: safeLink(get(c.link))
         };
       }).filter(function (s) {
@@ -352,7 +406,7 @@ $(window).scroll(function() {
         return a.date - b.date;
       });
 
-      if (shows.length) render(shows);
+      if (shows.length) { render(shows); addEventSchema(shows); }
       else showMessage('No upcoming shows right now. Check back soon!');
     })
     .catch(function () {
