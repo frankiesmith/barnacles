@@ -455,56 +455,77 @@ iframe {
   }
 }
 
-/* Form Overrides */
+/* Contact Form (Netlify Forms) */
 
-form {
-    max-width: 700px;
-    margin: auto;
-    background: rgba($orange, .8);
-    padding: 40px;
-  margin-top:60px;
-      position: relative;
-    z-index: 4000;
-}
+.contact-form {
+  max-width: 700px;
+  margin: 60px auto 0;
+  background: rgba($orange, .8);
+  padding: 40px;
+  position: relative;
+  z-index: 4000;
 
-form header {
-    display: none;
-}
-
-form ul {
-    list-style: none;
-    padding: 0;
-  margin:0;
-}
-
-form label {
-    display: none;
-}
-
-form input {
+  input,
+  textarea {
+    display: block;
     width: 100%;
     padding: 12px;
     margin-bottom: 20px;
     border: none;
+    font: inherit;
+    font-weight: 400;
+    color: $dark;
+  }
+
+  textarea {
+    resize: vertical;
+    margin-bottom: 0;
+  }
+
+  .form-row {
+    display: flex;
+    gap: 20px;
+    @media (max-width: 575px) {
+      display: block;
+      gap: 0;
+    }
+  }
+
+  .form-field {
+    flex: 1;
+  }
 }
 
-form textarea {
-    width: 100%;
-      border: none;
+.form-submit {
+  margin-top: 20px;
+  background: none;
+  border: 3px solid #fff;
+  display: inline-block;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 6px 20px;
+  cursor: pointer;
+  transition: .2s all;
+  &:hover,
+  &:focus-visible {
+    background: #fff;
+    color: $orange;
+  }
+  &:disabled {
+    opacity: .6;
+    cursor: default;
+  }
 }
 
-input#saveForm {
-    margin: 0;
-    margin-top: 20px;
-    background: none;
-    border: 3px solid #fff;
-    display: inline-block;
-    width: auto;
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 6px 20px;
+.form-status {
+  color: #fff;
+  font-weight: 600;
+  margin: 20px 0 0;
+  &:empty {
+    display: none;
+  }
 }
 
 /* Fade In Up Animation */
@@ -635,38 +656,4 @@ $menu-icon-color--active: $dark;
 .menu-icon.is-active span:nth-child(3) {
   top: math.div($menu-icon-width, 3.2);
   transform: rotate(-45deg);
-}
-
-
-.form {
-  max-width: 700px;
-    margin: auto;
-    background: rgba($orange, .8);
-    padding: 40px;
-  margin-top:60px;
-      position: relative;
-    z-index: 4000;
-    header {
-    display: none !important;
-}
-
-.redesigned-theme-2018 .wufoo li {
-    padding: 0 !important;
-}
-
-form ul {
-    list-style: none !important;
-}
-
-.req {
-    display: none !important;
-}
-
-label {
-    display: none !important;
-}
-
-.redesigned-theme-2018 .wufoo li {
-    margin-bottom: 20px !important;
-}
 }

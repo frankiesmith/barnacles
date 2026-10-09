@@ -179,9 +179,29 @@
     </div>
     <h2>CONTACT</h2>
 
-<div class="form">
-<div id="wufoo-z1brjxqd1puxj6w"> Fill out my <a href="https://frankiesmith.wufoo.com/forms/z1brjxqd1puxj6w">online form</a>. </div> <script type="text/javascript"> var z1brjxqd1puxj6w; (function(d, t) { var s = d.createElement(t), options = { 'userName':'frankiesmith', 'formHash':'z1brjxqd1puxj6w', 'autoResize':true, 'height':'557', 'async':true, 'host':'wufoo.com', 'header':'show', 'ssl':true }; s.src = ('https:' == d.location.protocol ?'https://':'http://') + 'secure.wufoo.com/scripts/embed/form.js'; s.onload = s.onreadystatechange = function() { var rs = this.readyState; if (rs) if (rs != 'complete') if (rs != 'loaded') return; try { z1brjxqd1puxj6w = new WufooForm(); z1brjxqd1puxj6w.initialize(options); z1brjxqd1puxj6w.display(); } catch (e) { } }; var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s, scr); })(document, 'script'); </script>
-</div>
+<form name="contact" method="POST" action="/" class="contact-form animated fade-in-up"
+      data-netlify="true" netlify-honeypot="bot-field">
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="visually-hidden">
+    <label>Leave this field empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+  <div class="form-row">
+    <div class="form-field">
+      <label for="first-name" class="visually-hidden">First Name</label>
+      <input id="first-name" name="first_name" type="text" maxlength="255" placeholder="First Name" autocomplete="given-name" required />
+    </div>
+    <div class="form-field">
+      <label for="last-name" class="visually-hidden">Last Name</label>
+      <input id="last-name" name="last_name" type="text" maxlength="255" placeholder="Last Name" autocomplete="family-name" required />
+    </div>
+  </div>
+  <label for="email" class="visually-hidden">Email</label>
+  <input id="email" name="email" type="email" maxlength="255" placeholder="Email" autocomplete="email" required />
+  <label for="message" class="visually-hidden">Message</label>
+  <textarea id="message" name="message" rows="8" placeholder="Message" required></textarea>
+  <button type="submit" class="form-submit">Submit</button>
+  <p class="form-status" role="status" aria-live="polite"></p>
+</form>
 
   </section>
   <footer>
