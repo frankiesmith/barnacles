@@ -133,21 +133,10 @@
             <div class="col-sm-12 col-lg-7 col-xl-6">
         <div class="content-box transparent-dark-bg animated fade-in-up">
           <h2>CALENDAR</h2>
-          <div class="calendar-group">
-            <h3>Hog Island Beer Co.</h3>
-            <div class="calendar-content">
-              <h4>June 29, 2024</h4>
-          <p>Orleans, MA • 6pm</p>
-         <a href="https://hogislandbeerco.com/" target="_blank" class="button">More Details</a>
-            </div>
-          </div>
-          <div class="calendar-group">
-            <h3>Pearl Restaurant & Bar</h3>
-            <div class="calendar-content">
-              <h4>July 2, 2024</h4>
-          <p>Wellfleet, MA • 3pm - 5pm</p>
-         <a href="https://wellfleetpearl.com/event/the-barnacles/" target="_blank" class="button">More Details</a>
-            </div>
+          <!-- Shows are loaded from the "Barnacles Show Calendar" Google Sheet (see script.js) -->
+          <div class="calendar-list" aria-live="polite"
+               data-calendar-csv="https://docs.google.com/spreadsheets/d/e/2PACX-1vQRIoSV4WiNb9a0t8wCjfPBWBqOpS_GQG890EEY2iVT3SJ6EkvGNSorqK70V3ynz8yTqlCUFDQLpixO/pub?gid=1694108525&single=true&output=csv">
+            <p class="calendar-message">Loading shows…</p>
           </div>
           <p>For Booking information please <a href="#contact">Contact Us.</a></p>
         </div>

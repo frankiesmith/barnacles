@@ -378,6 +378,12 @@ h4 {
 
 .calendar {
   background-image: url("https://assets.codepen.io/1270439/barn.jpg");
+  .calendar-list {
+    margin-bottom: 30px;
+  }
+  .calendar-message {
+    font-style: italic;
+  }
   .calendar-group {
     margin-bottom: 20px;
     padding-bottom: 20px;
