@@ -37,11 +37,14 @@ main {
     top: 153px;
     transition: .4s all; 
     @media(max-width:870px) {
-      top: 123px;
+      top: 161px; // 38px social bar + 123px logo row
     }
   &.raise {
     top: 110px;
     transition: .4s all;
+    @media(max-width:870px) {
+      top: 161px;
+    }
   }
 }
 
@@ -611,66 +614,55 @@ iframe {
 
 /*   Hamburger Icon */
 
-$menu-icon-width: 3em;
-$menu-icon-height: $menu-icon-width * 0.75;
-$menu-icon-color: $dark;
-$menu-icon-color--active: $dark;
+/* Hamburger button (mobile) */
 
 .menu-button {
-  display: inline-block;
-    position: absolute;
-    right: 10px;
-    top: 10px;
+  position: absolute;
+  right: 12px;
+  top: 38px + 39px; // below the social bar, centred on the logo row
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background .2s;
+  -webkit-tap-highlight-color: transparent;
+  &:hover,
+  &:focus-visible {
+    background: rgba($dark, .08);
+  }
 }
 
 .menu-icon {
   position: relative;
-    width: $menu-icon-width;
-  height: $menu-icon-height;
-  display: inline-block;
-}
+  width: 24px;
+  height: 18px;
+  display: block;
 
-.menu-icon span {
+  span {
     position: absolute;
-    height: math.div($menu-icon-width, 16);
+    left: 0;
     width: 100%;
-    background-color: $menu-icon-color;
-    transition: all 250ms ease-in-out;
-    transform: rotate(0deg);
-  box-shadow: 0px 1px 1px rgba(255,255,255,0.6);
-}
+    height: 2px;
+    border-radius: 2px;
+    background-color: $dark;
+    transition: transform 250ms ease, opacity 200ms ease, top 250ms ease;
+  }
+  span:nth-child(1) { top: 0; }
+  span:nth-child(2),
+  span:nth-child(3) { top: 8px; }
+  span:nth-child(4) { top: 16px; }
 
-.menu-icon span:nth-child(1) {
-    top: math.div($menu-icon-width, 32);
-}
-  
-.menu-icon span:nth-child(2),
-.menu-icon span:nth-child(3) {
-    top: math.div($menu-icon-width, 3.2);
-}
-
-.menu-icon span:nth-child(4) {
-    top: $menu-icon-width * 0.625;
-}
-
-.menu-button:hover span,
-.menu-button:focus span,
-.menu-button:active span {
-    background: $menu-icon-color--active;
-}
-
-.menu-icon.is-active span:nth-child(1),
-.menu-icon.is-active span:nth-child(4) {
-    opacity: 0; 
-}
-
-.menu-icon.is-active span:nth-child(2) {
-    transform: rotate(45deg);
-}
-
-.menu-icon.is-active span:nth-child(3) {
-  top: math.div($menu-icon-width, 3.2);
-  transform: rotate(-45deg);
+  &.is-active {
+    span:nth-child(1),
+    span:nth-child(4) {
+      top: 8px;
+      opacity: 0;
+    }
+    span:nth-child(2) { transform: rotate(45deg); }
+    span:nth-child(3) { transform: rotate(-45deg); }
+  }
 }
 
 /* Site Footer */
@@ -779,15 +771,17 @@ $menu-icon-color--active: $dark;
 
 .header nav .mobile-menu ul.header-social--mobile {
   display: flex;
-  position: absolute;
-  top: 52px;
-  right: 10px;
-  bottom: auto;
-  height: auto;
-  background: none;
-  border: none;
+  position: static;
+  width: 100%;
+  max-width: none;
+  height: 38px;
+  margin: 0;
   padding: 0;
-  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  gap: 26px;
+  background: $dark;
+  border: none;
 
   li {
     width: auto;
@@ -796,7 +790,12 @@ $menu-icon-color--active: $dark;
 
   a {
     border: none;
-    padding: 4px;
-    font-size: 1.15rem;
+    padding: 6px;
+    font-size: 1.35rem;
+    color: #fff;
+    &:hover,
+    &:focus-visible {
+      color: $orange;
+    }
   }
 }
