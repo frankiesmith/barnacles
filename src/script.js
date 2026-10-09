@@ -76,7 +76,7 @@ $(document).ready(function() {
 //Mobile Menu
 
   $(".menu-button").on('click', function() {
-    $(".mobile-menu ul").toggleClass("open");
+    $(".mobile-menu ul:not(.header-social)").toggleClass("open");
   });
 
   });
@@ -359,3 +359,8 @@ $(window).scroll(function() {
       showMessage("We couldn't load the show calendar right now. Please check back soon!");
     });
 })();
+
+/* Keep the footer copyright year current. */
+document.querySelectorAll('.current-year').forEach(function (el) {
+  el.textContent = new Date().getFullYear();
+});
