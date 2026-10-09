@@ -1,3 +1,15 @@
+/*
+ * How far below the top of the window a section should land so the fixed
+ * header doesn't cover it. Desktop uses the slim scrolled header; on mobile
+ * the header (logo + menu bar) is measured directly.
+ */
+function headerOffset() {
+  if (window.matchMedia('(max-width: 870px)').matches) {
+    return jQuery('header').outerHeight() + 15;
+  }
+  return 110;
+}
+
 jQuery(document).ready(function($) {
     $window = $(window);
 
@@ -16,17 +28,21 @@ jQuery(document).ready(function($) {
         });
     });
   
-  $('header').on('click','a',function(e){
-  if(e.target.href.indexOf('#') !== -1 ){
+  // Smooth-scroll menu links to their section, leaving room for the fixed header.
+  $('header').on('click', 'a', function (e) {
+    var href = $(this).attr('href') || '';
+    if (href.charAt(0) !== '#' || href.length < 2) return true;
+    var $target = $(href);
+    if (!$target.length) return true;
     e.preventDefault();
-    $('html,body').animate(
-      {scrollTop: $('#'+e.target.href.split('#')[1]).offset().top -110},
-      300
-    );
-  }
-  return true;
-		});
-  
+
+    // Close the mobile menu first so it isn't counted (or left covering the page)
+    $('.mobile-menu ul.open').removeClass('open');
+    $('.js-menu-button .menu-icon').removeClass('is-active');
+
+    $('html,body').animate({ scrollTop: $target.offset().top - headerOffset() }, 300);
+  });
+
   function toggleTopBar() {
   viewportHeight = $( window ).height() -153;
 if ($(this).scrollTop() > viewportHeight) {
@@ -131,7 +147,7 @@ $(document).ready(function() {
 })(jQuery);
 
 $(window).scroll(function() {
-		var scrollDistance = $(window).scrollTop() +110
+		var scrollDistance = $(window).scrollTop() + headerOffset() + 5
 	
 		// Assign active class to nav links while scolling
 		$('.nav-section').each(function(i) {
@@ -143,7 +159,7 @@ $(window).scroll(function() {
 }).scroll();
 
 $(window).scroll(function() {
-    var scrollDistance = $(window).scrollTop() +110
+    var scrollDistance = $(window).scrollTop() + headerOffset() + 5
   
     // Assign active class to nav links while scolling
     $('.nav-section').each(function(i) {
